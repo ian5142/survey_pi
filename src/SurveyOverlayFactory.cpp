@@ -183,15 +183,17 @@ wxImage &SurveyOverlayFactory::DrawGLText(double value, int precision) {
 	wxString labels;
 	
 	double coef = 1.0;
-	if (m_settings.m_iUnits == FATHOMS)
+	int iUnits = PI_GetPLIBDepthUnitInt();
+	if (iUnits == FATHOMS)
 		coef = 1.8288;
-	else if (m_settings.m_iUnits == FEET)
+	else if (iUnits == FEET)
 		coef = 0.3048;
+	else {}
 	
 	double depth = value / coef;
 	int p = precision;
 
-	labels.Printf(_T("%.*f"), p, value);
+	labels.Printf(_T("%.*f"), p, depth);
 
 	wxMemoryDC mdc(wxNullBitmap);
 
@@ -235,11 +237,11 @@ wxImage &SurveyOverlayFactory::DrawGLText(double value, int precision) {
 
 	mdc.SelectObject(wxNullBitmap);
 
-	m_labelCache[value] = bm.ConvertToImage();
+	m_labelCache[depth] = bm.ConvertToImage();
 
-	m_labelCache[value].InitAlpha();
+	m_labelCache[depth].InitAlpha();
 
-	wxImage &image = m_labelCache[value];
+	wxImage &image = m_labelCache[depth];
 
 	unsigned char *d = image.GetData();
 	unsigned char *a = image.GetAlpha();
@@ -256,7 +258,7 @@ wxImage &SurveyOverlayFactory::DrawGLText(double value, int precision) {
 			a[ioff] = 255 - (r + g + b) / 3;
 		}
 
-	return m_labelCache[value];
+	return m_labelCache[depth];
 }
 
 wxImage &SurveyOverlayFactory::DrawGLTextDir(double value, int precision) {
@@ -835,10 +837,12 @@ void SurveyOverlayFactory::DrawAllSoundingsInViewPort(PlugIn_ViewPort *BBox, boo
 void SurveyOverlayFactory::DrawSounding(wxDC &dc, int x, int y, double depth, int sounding_id, int survey_id, int text_offset)
 {
 	double coef = 1.0;
-	if (m_settings.m_iUnits == FATHOMS)
+	int iUnits = PI_GetPLIBDepthUnitInt();
+	if (iUnits == FATHOMS)
 		coef = 1.8288;
-	else if (m_settings.m_iUnits == FEET)
+	else if (iUnits == FEET)
 		coef = 0.3048;
+	else {}
 
 	wxColour s_Colour;
 	s_Colour = m_settings.m_sSoundingColor;
