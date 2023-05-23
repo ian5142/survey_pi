@@ -1,3 +1,11 @@
-build/*
-src/version.h
+build
+build-*
+!build-conf.rc
+!build-deps
+po/*.pot
+.DS_Store
+*humbs.db
+cache
+plugins
+*.bat
 *.bak

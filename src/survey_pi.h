@@ -51,14 +51,11 @@
 #include "square.xpm"
 #include <sstream>
 #include "wx/progdlg.h"
+#include "ocpn_plugin.h"
+
+#include "config.h"
 
 //#include "SurveyOverlayFactory.h"
-
-#define     PLUGIN_VERSION_MAJOR    3
-#define     PLUGIN_VERSION_MINOR    522
-
-#define     MY_API_VERSION_MAJOR    1
-#define     MY_API_VERSION_MINOR    8
 
 #define FEET    0
 #define METERS  1
@@ -72,7 +69,7 @@
 #include "surveygui_impl.h"
 #include "SurveyOverlayFactory.h"
 
-#include "nmea0183/nmea0183.h"
+#include "nmea0183.h"
 #include <wx/tokenzr.h>
 #include <wx/textfile.h>
 
@@ -109,7 +106,7 @@ public:
 
 #define SURVEY_TOOL_POSITION    -1          // Request default positioning of toolbar tool
 
-class survey_pi : public opencpn_plugin_116
+class survey_pi : public opencpn_plugin_117
 {
 public:
       survey_pi(void *ppimgr);
